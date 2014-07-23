@@ -96,6 +96,27 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
 
 #pragma mark Interface
 
+// override public getter for compatibility : we want a
+// dict<string,string> to be returned even for "multiple" headers
+// so that code reading the values don't break
+-(NSDictionary*)headers {
+    NSMutableDictionary *d = [[NSMutableDictionary alloc] init];
+    if (!_headers) {
+        return @{};
+    }
+    for (NSString *name in _headers) {
+        id val = _headers[name];
+        if ([val isKindOfClass:[NSArray class]]) {
+            NSArray *valArray = val;
+            if (valArray.count>0) {
+                val = valArray[0];
+            }
+        }
+        d[name] = val;
+    }
+    return [NSDictionary dictionaryWithDictionary:d];
+}
+
 - (void)finishWithContent:(id)content size:(NSUInteger)size successful:(BOOL)successful
 {
     _content = content;
@@ -105,17 +126,43 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
 
 - (NSString*)headerWithName:(NSString*)header
 {
-    return _headers[header];
+    id headerValues = _headers[header];
+    if ([headerValues isKindOfClass:[NSString class]]) {
+        // header is a string, return id directly
+        return headerValues;
+    } else if ([headerValues isKindOfClass:[NSArray class]]) {
+        // header is an array of strings, get first element
+        NSArray *vals = headerValues;
+        if (vals.count>0) {
+            return vals[0];
+        }
+    }
+    return nil;
 }
 
 - (NSString*)objectForKeyedSubscript:(NSString*)header
 {
-    return _headers[header];
+    return [self headerWithName:header];
 }
 
 - (void)setValue:(NSString*)value forHeader:(NSString*)header
 {
-    _headers[header] = value;
+    id curVal = _headers[header];
+    if (!curVal) {
+        // no previously added headers, assign a string
+        _headers[header] = value;
+    } else {
+        // already one (or more) headers, morph to an array if
+        // needed and add element
+        NSMutableArray *values;
+        if ([curVal isKindOfClass:[NSString class]]) {
+            values = [[NSMutableArray alloc] initWithArray:@[curVal]];
+        } else {
+            values = [NSMutableArray arrayWithArray:values];
+        }
+        [values addObject:value];
+        _headers[header] = [NSArray arrayWithArray:values];
+    }
 }
 
 - (void)setObject:(NSString*)value forKeyedSubscript:(NSString*)header
@@ -128,6 +175,17 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
     return _successful;
 }
 
+- (NSArray*)headersWithName:(NSString*)header {
+    id val = _headers[header];
+    if (!val) {
+        return @[];
+    }
+    if ([val isKindOfClass:[NSString class]]) {
+        return @[val];
+    } else {
+        return val;
+    }
+}
 
 #pragma mark Debug
 

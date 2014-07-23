@@ -71,4 +71,8 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string);
 - (NSString*)objectForKeyedSubscript:(NSString*)header;
 - (void)setObject:(NSString*)value forKeyedSubscript:(NSString*)header;
 
+// Return an array of the headers for passed name, for
+// headers with multiple values (like Set-Cookie)
+- (NSArray*)headersWithName:(NSString*)header;
+
 @end
