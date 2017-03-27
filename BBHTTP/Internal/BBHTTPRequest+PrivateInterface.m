@@ -37,13 +37,15 @@
     if ([self hasFinished]) return NO;
 
     _startTimestamp = BBHTTPCurrentTimeMillis();
-    if (self.startBlock != nil) {
-        dispatch_async(self.callbackQueue, ^{
+    
+    dispatch_async(self.callbackQueue, ^{
+        
+        if (self.startBlock != nil)
+        {
             self.startBlock();
-
             self.startBlock = nil;
-        });
-    }
+        }
+    });
 
     return YES;
 }
@@ -56,16 +58,19 @@
     _error = error;
     _response = response;
 
-    if (self.finishBlock != nil) {
-        dispatch_async(self.callbackQueue, ^{
+    dispatch_async(self.callbackQueue, ^{
+        
+        if (self.finishBlock != nil)
+        {
             self.finishBlock(self);
-
-            self.uploadProgressBlock = nil;
-            self.downloadProgressBlock = nil;
             self.finishBlock = nil;
-        });
-    }
-    
+        }
+        
+        self.uploadProgressBlock = nil;
+        self.downloadProgressBlock = nil;
+        
+    });
+                   
     return YES;
 }
 
@@ -75,12 +80,15 @@
 
     _sentBytes = current;
 
-    if (self.uploadProgressBlock != nil) {
-        dispatch_async(self.callbackQueue, ^{
+    dispatch_async(self.callbackQueue, ^{
+        
+        if (self.uploadProgressBlock != nil)
+        {
             self.uploadProgressBlock(current, total);
-        });
-    }
+        }
 
+    });
+    
     return YES;
 }
 
@@ -89,12 +97,14 @@
     if ([self hasFinished]) return NO;
 
     _receivedBytes = current;
-
-    if (self.downloadProgressBlock != nil) {
-        dispatch_async(self.callbackQueue, ^{
+    
+    dispatch_async(self.callbackQueue, ^{
+        
+        if (self.downloadProgressBlock != nil)
+        {
             self.downloadProgressBlock(current, total);
-        });
-    }
+        }
+    });
 
     return YES;
 }

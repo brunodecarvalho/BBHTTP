@@ -1,3 +1,13 @@
+
+## 1.0.1
+
+#### Feb 15th, 2017
+
+* Automatically follow redirects,
+* Flag NOBODY,
+* Flag Post Fields,
+* Other bugfix.
+
 ## 0.9.9
 
 #### September 26th, 2013

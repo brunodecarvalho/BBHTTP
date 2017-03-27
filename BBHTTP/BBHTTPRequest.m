@@ -27,7 +27,7 @@
 
 #pragma mark - Utility Functions
 
-BBTransferSpeed BBTransferSpeedMake(NSUInteger bytesPerSecond, NSTimeInterval duration)
+BBTransferSpeed BBTransferSpeedMake(NSUInteger bytesPerSecond, NSUInteger duration)
 {
     BBTransferSpeed transferSpeed;
     transferSpeed.bytesPerSecond = bytesPerSecond;
@@ -38,7 +38,7 @@ BBTransferSpeed BBTransferSpeedMake(NSUInteger bytesPerSecond, NSTimeInterval du
 
 NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed)
 {
-    return [NSString stringWithFormat:@"%lu/s for %.0f seconds",
+    return [NSString stringWithFormat:@"%lu/s for %lu seconds",
             (unsigned long)transferSpeed.bytesPerSecond, transferSpeed.duration];
 }
 
@@ -88,10 +88,10 @@ NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed)
         _startTimestamp = -1;
         _endTimestamp = -1;
         _version = version;
-        _maxRedirects = 0;
-        _allowInvalidSSLCertificates = NO;
+        _maxRedirects = 3;
+        _allowInvalidSSLCertificates = YES;
         _connectionTimeout = 10;
-        _downloadTimeout = BBTransferSpeedMake(1024, 20);
+        _downloadTimeout = BBTransferSpeedMake(1, 20);
         _uploadSpeedLimit = 0;
         _downloadSpeedLimit = 0;
         _callbackQueue = dispatch_get_main_queue();
@@ -379,15 +379,17 @@ NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed)
     if (_startTimestamp < 0) _startTimestamp = now;
     _endTimestamp = now;
 
-    if (_finishBlock != nil) {
-        dispatch_async(_callbackQueue, ^{
+    dispatch_async(_callbackQueue, ^{
+        
+        if (_finishBlock != nil)
+        {
             _finishBlock(self);
-
-            _uploadProgressBlock = nil;
-            _downloadProgressBlock = nil;
             _finishBlock = nil;
-        });
-    }
+        }
+        _uploadProgressBlock = nil;
+        _downloadProgressBlock = nil;
+        
+    });
 
     return YES;
 }

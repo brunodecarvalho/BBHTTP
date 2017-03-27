@@ -116,5 +116,6 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 @property(assign, nonatomic, readonly) BBHTTPResponseState state;
 
 - (BOOL)isCurrentResponse100Continue;
+- (BOOL)isCurrentResponse30XRedirect;
 
 @end

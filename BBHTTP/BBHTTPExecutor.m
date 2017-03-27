@@ -69,11 +69,12 @@ static size_t BBHTTPExecutorReadHeader(uint8_t* buffer, size_t size, size_t leng
         // Subsequent callbacks will keep hitting BBHTTPExecutorReadHeader()
         return length;
     }
-
+    
     // End of headers reached, data will follow
     BBHTTPLogTrace(@"%@ | All headers received.", context);
     BOOL canProceed = YES;
-    if ([context isCurrentResponse100Continue]) {
+    if ([context isCurrentResponse100Continue] ||
+        [context isCurrentResponse30XRedirect]) {
         // Subsequent callbacks will hit BBHTTPExecutorReadStatusLine()
         [context finishCurrentResponse];
     } else {
@@ -135,15 +136,13 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
         case BBHTTPResponseStateReady:
         case BBHTTPResponseStateReadingStatusLine:
             return BBHTTPExecutorReadStatusLine(buffer, size, length, context);
-
         case BBHTTPResponseStateReadingHeaders:
             return BBHTTPExecutorReadHeader(buffer, size, length, context);
-
         case BBHTTPResponseStateReadingData:
             return BBHTTPExecutorAppendData(buffer, size, length, context);
-
+            
         default:
-            // never happens...
+            // never happen
             return 0;
     }
 }
@@ -237,10 +236,10 @@ static BOOL BBHTTPExecutorInitialized = NO;
         _availableCurlHandles = [NSMutableArray array];
         _allCurlHandles = [NSMutableArray array];
 
-        NSString* syncQueueId = [NSString stringWithFormat:@"com.biasedbit.HTTPExecutorSyncQueue-%@", identifier];
+        NSString* syncQueueId = [NSString stringWithFormat:@"BBHTTP.HTTPExecutorSyncQueue-%@", identifier];
         _synchronizationQueue = dispatch_queue_create([syncQueueId UTF8String], DISPATCH_QUEUE_SERIAL);
 
-        NSString* requestQueueId = [NSString stringWithFormat:@"com.biasedbit.HTTPExecutorRequestQueue-%@", identifier];
+        NSString* requestQueueId = [NSString stringWithFormat:@"BBHTTP.HTTPExecutorRequestQueue-%@", identifier];
         _requestExecutionQueue = dispatch_queue_create([requestQueueId UTF8String], DISPATCH_QUEUE_CONCURRENT);
     }
 
@@ -498,37 +497,49 @@ static BOOL BBHTTPExecutorInitialized = NO;
         curl_easy_setopt(handle, CURLOPT_READFUNCTION, NULL);
         curl_easy_setopt(handle, CURLOPT_READDATA, NULL);
     }
-
+    
     // Setup - response handling callback
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, BBHTTPExecutorReceiveCallback);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, context);
 
     // Setup - configure timeouts
-    curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, context.request.connectionTimeout);
-    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, context.request.downloadTimeout.bytesPerSecond);
-    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, context.request.downloadTimeout.duration);
+    curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, request.connectionTimeout);
+    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, request.downloadTimeout.bytesPerSecond);
+    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, request.downloadTimeout.duration);
 
     // Setup - speed limits
-    if ([context.request isUpload] && (context.request.uploadSpeedLimit > 0)) {
-        curl_easy_setopt(handle, CURLOPT_MAX_SEND_SPEED_LARGE, context.request.uploadSpeedLimit);
+    if ([request isUpload] && (request.uploadSpeedLimit > 0)) {
+        curl_easy_setopt(handle, CURLOPT_MAX_SEND_SPEED_LARGE, request.uploadSpeedLimit);
     }
 
-    if (context.request.downloadSpeedLimit > 0) {
-        curl_easy_setopt(handle, CURLOPT_MAX_RECV_SPEED_LARGE, context.request.downloadSpeedLimit);
+    if (request.downloadSpeedLimit > 0) {
+        curl_easy_setopt(handle, CURLOPT_MAX_RECV_SPEED_LARGE, request.downloadSpeedLimit);
     }
 
     // Setup - configure redirections
-//    if (context.request.maxRedirects == 0) {
-//        curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, NO);
-//    } else {
-//        curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, YES);
-//        curl_easy_setopt(handle, CURLOPT_MAXREDIRS, context.request.maxRedirects);
-//    }
+    if (request.maxRedirects == 0) {
+        curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 0L);
+    } else {
+        curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(handle, CURLOPT_MAXREDIRS, request.maxRedirects);
+        curl_easy_setopt(handle, CURLOPT_AUTOREFERER, 1L);
+    }
 
     // Setup - misc configuration
     curl_easy_setopt(handle, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(handle, CURLOPT_FAILONERROR, 0L); // Handle >= 400 codes as success at this layer
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, context.request.allowInvalidSSLCertificates ? 0L : 1L);
+    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, request.allowInvalidSSLCertificates ? 0L : 1L);
+    
+    if (request.postField.length > 0)
+    {
+        curl_easy_setopt(handle, CURLOPT_POSTFIELDSIZE, request.postField.length);
+        curl_easy_setopt(handle, CURLOPT_POSTFIELDS, request.postField.bytes);
+    }
+    
+    if (request.noBody)
+    {
+        curl_easy_setopt(handle, CURLOPT_NOBODY, 1L);
+    }
 
     BBHTTPLogInfo(@"%@ | Request starting…", context);
 

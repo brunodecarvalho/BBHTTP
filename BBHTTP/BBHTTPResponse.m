@@ -86,7 +86,13 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
     BBHTTPProtocolVersion version = BBHTTPProtocolVersionFromNSString(versionString);
     NSUInteger statusCode = (NSUInteger)[statusCodeString integerValue];
 
-    NSString* message = [statusLine substringFromIndex:NSMaxRange(statusCodeRange) + 1];
+    NSUInteger index = NSMaxRange(statusCodeRange) + 1;
+    if (index > statusLine.length - 1)
+    {
+        index = statusLine.length - 1;
+    }
+    
+    NSString* message = [statusLine substringFromIndex:index];
 
     BBHTTPResponse* response = [[self alloc] initWithVersion:version code:statusCode andMessage:message];
 
@@ -127,7 +133,6 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
 {
     return _successful;
 }
-
 
 #pragma mark Debug
 

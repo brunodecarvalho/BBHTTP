@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = "BBHTTP"
-  s.version  = "0.9.9"
+  s.version  = "1.0.1"
   s.summary  = "A modern HTTP client framework for iOS/OSX built on top of libcurl."
   s.homepage = "https://github.com/brunodecarvalho/BBHTTP"
   s.license  = { :type => "Apache License, Version 2.0", :file => "LICENSE" }

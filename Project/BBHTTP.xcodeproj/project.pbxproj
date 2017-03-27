@@ -22,13 +22,11 @@
 		15F5AEE616D9DE470051FC4A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEE516D9DE470051FC4A /* Security.framework */; };
 		15F5AEE816D9DE4F0051FC4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEE716D9DE4F0051FC4A /* libz.dylib */; };
 		15F5AEEA16D9DE580051FC4A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEE916D9DE580051FC4A /* MobileCoreServices.framework */; };
-		15F5AEED16D9DE830051FC4A /* libcurl.iOS.dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEEC16D9DE830051FC4A /* libcurl.iOS.dev.a */; };
 		15F5AEEF16D9DE960051FC4A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEEE16D9DE960051FC4A /* CoreServices.framework */; };
 		15F5AEF216D9DEA70051FC4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF116D9DEA70051FC4A /* libz.dylib */; };
 		15F5AEF416D9DEB30051FC4A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF316D9DEB30051FC4A /* AppKit.framework */; };
 		15F5AEF616D9DEC20051FC4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF516D9DEC20051FC4A /* UIKit.framework */; };
 		15F5AEF816D9DED20051FC4A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF716D9DED20051FC4A /* Security.framework */; };
-		15F5AEFA16D9DEE10051FC4A /* libcurl.OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF916D9DEE10051FC4A /* libcurl.OSX.a */; };
 		15F5AF1E16D9E1060051FC4A /* BBHTTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AEFC16D9E1060051FC4A /* BBHTTP.h */; };
 		15F5AF1F16D9E1060051FC4A /* BBHTTPExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AEFD16D9E1060051FC4A /* BBHTTPExecutor.h */; };
 		15F5AF2016D9E1060051FC4A /* BBHTTPExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AEFE16D9E1060051FC4A /* BBHTTPExecutor.m */; };
@@ -129,13 +127,11 @@
 		15F5AEE516D9DE470051FC4A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		15F5AEE716D9DE4F0051FC4A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15F5AEE916D9DE580051FC4A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
-		15F5AEEC16D9DE830051FC4A /* libcurl.iOS.dev.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.iOS.dev.a; path = ../../External/libcurl.iOS/libcurl.iOS.dev.a; sourceTree = "<group>"; };
 		15F5AEEE16D9DE960051FC4A /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/CoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		15F5AEF116D9DEA70051FC4A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15F5AEF316D9DEB30051FC4A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		15F5AEF516D9DEC20051FC4A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		15F5AEF716D9DED20051FC4A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		15F5AEF916D9DEE10051FC4A /* libcurl.OSX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.OSX.a; path = ../../External/libcurl.OSX/libcurl.OSX.a; sourceTree = "<group>"; };
 		15F5AEFC16D9E1060051FC4A /* BBHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTP.h; sourceTree = "<group>"; };
 		15F5AEFD16D9E1060051FC4A /* BBHTTPExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPExecutor.h; sourceTree = "<group>"; };
 		15F5AEFE16D9E1060051FC4A /* BBHTTPExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPExecutor.m; sourceTree = "<group>"; };
@@ -202,7 +198,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				15F5AE9B16D9D7060051FC4A /* libBBHTTP.OSX.a in Frameworks */,
-				15F5AEFA16D9DEE10051FC4A /* libcurl.OSX.a in Frameworks */,
 				15F5AEF216D9DEA70051FC4A /* libz.dylib in Frameworks */,
 				15F5AEF416D9DEB30051FC4A /* AppKit.framework in Frameworks */,
 				15F5AEEF16D9DE960051FC4A /* CoreServices.framework in Frameworks */,
@@ -215,7 +210,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				15F5AE9C16D9D70B0051FC4A /* libBBHTTP.iOS.a in Frameworks */,
-				15F5AEED16D9DE830051FC4A /* libcurl.iOS.dev.a in Frameworks */,
 				15F5AEE816D9DE4F0051FC4A /* libz.dylib in Frameworks */,
 				15F5AEEA16D9DE580051FC4A /* MobileCoreServices.framework in Frameworks */,
 				15F5AEE616D9DE470051FC4A /* Security.framework in Frameworks */,
@@ -359,7 +353,6 @@
 		15F5AEEB16D9DE6F0051FC4A /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				15F5AEEC16D9DE830051FC4A /* libcurl.iOS.dev.a */,
 				15F5AEE716D9DE4F0051FC4A /* libz.dylib */,
 			);
 			name = Libraries;
@@ -368,7 +361,6 @@
 		15F5AEF016D9DE9C0051FC4A /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				15F5AEF916D9DEE10051FC4A /* libcurl.OSX.a */,
 				15F5AEF116D9DEA70051FC4A /* libz.dylib */,
 			);
 			name = Libraries;
@@ -826,11 +818,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS/include";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS/lib";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LIBTOOLFLAGS = "-lcurl";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -857,10 +850,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS/include";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS/lib";
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LIBTOOLFLAGS = "-lcurl";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -896,10 +890,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX/include";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LIBTOOLFLAGS = "-lcurl";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -927,9 +922,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX/include";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LIBTOOLFLAGS = "-lcurl";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
